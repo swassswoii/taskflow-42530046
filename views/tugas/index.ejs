@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | TaskFlow</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>TaskFlow</h1>
+                <p>Sistem Manajemen Tugas Mahasiswa</p>
+            </div>
+
+            <a href="/tugas/tambah" class="btn btn-primary">
+                + Tambah Tugas
+            </a>
+        </header>
+
+        <section class="content">
+            <h2>Daftar Tugas</h2>
+            <p class="subtitle">Kelola dan pantau tugas kuliahmu.</p>
+
+            <% if (tugas.length === 0) { %>
+                <div class="empty-state">
+                    <h3>Belum ada tugas</h3>
+                    <p>Tambahkan tugas kuliah pertamamu.</p>
+                </div>
+            <% } else { %>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Judul Tugas</th>
+                                <th>Mata Kuliah</th>
+                                <th>Deadline</th>
+                                <th>Prioritas</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% tugas.forEach((item, index) => { %>
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><strong><%= item.judul %></strong></td>
+                                    <td><%= item.mata_kuliah %></td>
+                                    <td><%= new Date(item.deadline).toLocaleDateString('id-ID') %></td>
+                                    <td><%= item.prioritas %></td>
+                                    <td><%= item.status %></td>
+                                    <td class="actions">
+                                        <a href="/tugas/edit/<%= item.id %>" class="btn btn-edit">Edit</a>
+
+                                        <form action="/tugas/hapus/<%= item.id %>" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus tugas ini?')">
+                                            <button type="submit" class="btn btn-delete">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 TaskFlow - Sistem Manajemen Tugas Mahasiswa</p>
+        </footer>
+    </div>
+</body>
+</html>

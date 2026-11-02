@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | TaskFlow</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>TaskFlow</h1>
+                <p>Sistem Manajemen Tugas Mahasiswa</p>
+            </div>
+
+            <a href="/tugas" class="btn btn-secondary">Kembali</a>
+        </header>
+
+        <section class="content form-content">
+            <h2>Edit Tugas</h2>
+            <p class="subtitle">Perbarui informasi tugas kuliahmu.</p>
+
+            <form action="/tugas/edit/<%= tugas.id %>" method="POST" class="task-form">
+                <div class="form-group">
+                    <label for="judul">Judul Tugas</label>
+                    <input type="text" id="judul" name="judul"
+                        value="<%= tugas.judul %>" maxlength="150" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mata_kuliah">Mata Kuliah</label>
+                    <input type="text" id="mata_kuliah" name="mata_kuliah"
+                        value="<%= tugas.mata_kuliah %>" maxlength="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <textarea id="deskripsi" name="deskripsi" rows="4"><%= tugas.deskripsi || '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" name="deadline"
+                        value="<%= new Date(tugas.deadline).toISOString().split('T')[0] %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prioritas">Prioritas</label>
+                    <select id="prioritas" name="prioritas" required>
+                        <option value="Rendah" <%= tugas.prioritas === 'Rendah' ? 'selected' : '' %>>Rendah</option>
+                        <option value="Sedang" <%= tugas.prioritas === 'Sedang' ? 'selected' : '' %>>Sedang</option>
+                        <option value="Tinggi" <%= tugas.prioritas === 'Tinggi' ? 'selected' : '' %>>Tinggi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="Belum Dikerjakan" <%= tugas.status === 'Belum Dikerjakan' ? 'selected' : '' %>>Belum Dikerjakan</option>
+                        <option value="Sedang Dikerjakan" <%= tugas.status === 'Sedang Dikerjakan' ? 'selected' : '' %>>Sedang Dikerjakan</option>
+                        <option value="Selesai" <%= tugas.status === 'Selesai' ? 'selected' : '' %>>Selesai</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bobot">Bobot Tugas (%)</label>
+                    <input type="number" id="bobot" name="bobot"
+                        min="0" max="100" step="0.01"
+                        value="<%= tugas.bobot %>" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Simpan Perubahan
+                </button>
+            </form>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 TaskFlow - Sistem Manajemen Tugas Mahasiswa</p>
+        </footer>
+    </div>
+</body>
+</html>
